@@ -1,10 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { performance } from 'node:perf_hooks';
-import { detectPitch, analyze, renderCat, createDemo, encodeWav, resample, prepareSample, OUTPUT_RATE } from '../src/audio.js';
+import { detectPitch, analyze, renderCat as renderFromBank, createDemo, encodeWav, resample, prepareSample, OUTPUT_RATE } from '../src/audio.js';
+import { MEOW_SAMPLES } from '../src/meow-bank.js';
 import { readWav } from './helpers.js';
 
 const cat = readWav(new URL('../public/audio/meow.wav', import.meta.url));
+const bank = MEOW_SAMPLES.map(({ id, file }) => ({ id, ...readWav(new URL(`../public/${file}`, import.meta.url)) }));
+// Single-source fixtures isolate rendering fidelity inside the same bank pipeline.
+const renderCat = (input, rate, samples, sampleRate) => renderFromBank(input, rate, [{ samples, sampleRate }]);
 const energy = (samples) => samples.reduce((sum, value) => sum + value * value, 0);
 
 function toneResidual(samples, frequency, start, end) {
@@ -73,6 +77,36 @@ test('real cat sample has a usable voiced pitch', () => {
   console.log(`Cat sample reference pitch: ${sample.pitch.toFixed(1)} Hz`);
 });
 
+test('the shipped bank contains distinct voiced recordings and rotates them without consecutive repeats', () => {
+  assert.equal(bank.length, 6);
+  const unique = new Set(bank.map((sample) => Buffer.from(sample.samples.buffer).toString('base64')));
+  assert.equal(unique.size, bank.length, 'these must be distinct recordings, not copies of one meow');
+  for (const sample of bank) {
+    const prepared = prepareSample(sample.samples, sample.sampleRate);
+    assert.ok(prepared.pitch >= 75 && prepared.pitch <= 1000);
+    assert.ok(prepared.samples.length > OUTPUT_RATE * 0.2);
+  }
+  const demo = createDemo();
+  const result = renderFromBank(demo.samples, demo.sampleRate, bank);
+  assert.equal(result.sampleIds.length, result.meows);
+  assert.ok(new Set(result.sampleIds).size >= 4, 'a melody should audibly use several different meows');
+  for (let i = 1; i < result.sampleIds.length; i++) assert.notEqual(result.sampleIds[i], result.sampleIds[i - 1]);
+  assert.equal(result.samples.length, demo.samples.length);
+  assert.equal(energy(result.samples.subarray(0, 0.2 * OUTPUT_RATE)), 0);
+  assert.ok(result.samples.every((value) => Number.isFinite(value) && Math.abs(value) <= 0.901));
+  const inputEvents = analyze(demo.samples, demo.sampleRate).events;
+  const outputPitches = inputEvents.map((event, i) => analyze(result.samples.slice(
+    Math.round(event.start * OUTPUT_RATE), Math.round((inputEvents[i + 1]?.start ?? 5) * OUTPUT_RATE)), OUTPUT_RATE).medianPitch);
+  assert.ok(outputPitches[2] > outputPitches[0] * 1.3, 'switching recordings must preserve the rising melody');
+  assert.ok(outputPitches[5] < outputPitches[2] * 0.8, 'switching recordings must preserve the falling melody');
+  assert.deepEqual(renderFromBank(demo.samples, demo.sampleRate, bank).sampleIds, result.sampleIds, 'retries should be deterministic');
+});
+
+test('an unavailable sample bank produces a recoverable error', () => {
+  const demo = createDemo();
+  assert.throws(() => renderFromBank(demo.samples, demo.sampleRate, []), /cat sounds could not be loaded/);
+});
+
 test('renders timed cat events from a melody, retaining silence and avoiding clipping', () => {
   const demo = createDemo();
   const result = renderCat(demo.samples, demo.sampleRate, cat.samples, cat.sampleRate);
@@ -108,7 +142,7 @@ test('processes a maximum-length clip within an interactive budget', () => {
   const input = new Float32Array(OUTPUT_RATE * 60);
   for (let i = 0; i < 12; i++) input.set(demo.samples, i * demo.samples.length);
   const start = performance.now();
-  const result = renderCat(input, OUTPUT_RATE, cat.samples, cat.sampleRate);
+  const result = renderFromBank(input, OUTPUT_RATE, bank);
   assert.equal(result.samples.length, input.length);
   assert.ok(result.meows >= 84);
   const elapsed = performance.now() - start;

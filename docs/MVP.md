@@ -35,7 +35,7 @@ A fun, shareable browser demo that turns an uploaded vocal recording into downlo
 ## Parked risks
 
 - Pitch and phrase tracking will be less reliable for speech, noisy clips, and full mixes.
-- Repeated samples may sound repetitive; the first version can use a small sample set.
+- The six-sample meow bank reduces repetition; long clips can still repeat sounds.
 - Browser decoding support and processing speed vary, especially on mobile; verify common browsers with real audio.
 - Future VST3 delivery would require native integration work.
 
@@ -53,4 +53,4 @@ After scope confirmation, build the smallest end-to-end audio path first: select
 - Desktop and mobile Chromium checks pass for decoding, conversion, playback, download, invalid files, silence, and recovery.
 - Chromium, Firefox, and WebKit checks pass locally and on the deployed site, including a spoken-voice WAV fixture and the 60-second limit.
 - GitHub Actions builds and deploys the static site after changes to main.
-- The actual meow is freemaster2's CC0 Siamese cat recording; its source and all bundled asset credits are included in public/credits.txt.
+- The bank contains six distinct meows: freemaster2's CC0 Siamese cat recording and five separate calls from Heismark's public-domain recording. All source intervals, edits, and bundled asset credits are included in public/credits.txt.

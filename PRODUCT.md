@@ -22,6 +22,8 @@ An amusing, shareable upload-to-download vocal-to-cat demo. Success means a visi
 
 Upload a short vocal recording, generate a sample-based cat performance, preview it, and download WAV audio. Preserve approximate musical expression, not words. Process on the visitor's device. No live input or plugin is needed for the first version.
 
+Use a bank of distinct real recorded meows, varying the source during a performance instead of repeating one meow throughout.
+
 ## Product Principles
 
 - Make the sound recognizable and entertaining before pursuing transcription accuracy.

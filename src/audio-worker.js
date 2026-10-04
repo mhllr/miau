@@ -2,7 +2,7 @@ import { renderCat, encodeWav } from './audio.js';
 
 self.onmessage = ({ data }) => {
   try {
-    const result = renderCat(data.input, data.rate, data.sample, data.sampleRate,
+    const result = renderCat(data.input, data.rate, data.sampleBank,
       (progress) => self.postMessage({ type: 'progress', progress }));
     const wav = encodeWav(result.samples, result.sampleRate);
     self.postMessage({ type: 'complete', ...result, wav }, [result.samples.buffer, wav]);

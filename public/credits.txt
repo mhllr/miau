@@ -10,6 +10,22 @@ Downloaded from:
 https://upload.wikimedia.org/wikipedia/commons/8/81/Meow_of_a_Siamese_cat_-_freemaster2.wav
 Unmodified original, already trimmed by the Wikimedia contributor.
 
+audio/meow-pleading-1.wav through audio/meow-pleading-5.wav
+Five separate meow utterances from "Meow of a pleading cat" by Heismark,
+8 October 2010. Released into the public domain by its author (PD-self).
+Source and license declaration:
+https://commons.wikimedia.org/wiki/File:Meow_of_a_pleading_cat.oga
+Original audio:
+https://upload.wikimedia.org/wikipedia/commons/6/6b/Meow_of_a_pleading_cat.oga
+Edits: decoded to mono 24 kHz PCM WAV, isolated the following source intervals,
+and added brief edge fades to avoid clicks. These are different recorded calls,
+not pitch-shifted duplicates of the original Siamese sample.
+1: 0.24–1.64 seconds (10 ms edge fades)
+2: 3.50–4.97 seconds (10 ms edge fades)
+3: 6.63–7.79 seconds (10 ms edge fades)
+4: 9.30–10.17 seconds (20 ms edge fades)
+5: 10.17–11.48 seconds (20 ms edge fades)
+
 images/cat.jpg
 Source: https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba
 Photo via Unsplash, distributed under the Unsplash License.

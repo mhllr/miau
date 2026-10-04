@@ -14,6 +14,10 @@ _Avoid_: Cartoon voice, pitch-shifted voice
 **Meow sample**:
 A recording of a real cat's meow used as the sound source for a cat performance.
 
+**Meow bank**:
+A collection of distinct meow samples available for a cat performance. Different samples represent different recorded calls, rather than altered copies of one call.
+_Avoid_: Cat voices
+
 **Vocal clip**:
 A recorded vocal performance supplied by a visitor to make a cat performance.
 

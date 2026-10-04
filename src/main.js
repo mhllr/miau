@@ -1,7 +1,8 @@
 import { MAX_SECONDS, encodeWav, createDemo } from './audio.js';
+import { MEOW_SAMPLES } from './meow-bank.js';
 
 const $ = (id) => document.getElementById(id);
-let input = null, audioContext = null, worker = null, samplePromise = null;
+let input = null, audioContext = null, worker = null, sampleBankPromise = null;
 let sourceUrl = null, resultUrl = null, busy = false, generation = 0;
 
 function context() {
@@ -87,16 +88,16 @@ async function loadFile(file) {
   } finally { if (token === generation) setBusy(false); }
 }
 
-async function catSample() {
-  if (!samplePromise) {
-    samplePromise = (async () => {
-      const response = await fetch(`${import.meta.env.BASE_URL}audio/meow.wav`);
-      if (!response.ok) throw new Error('The cat sound couldn’t load. Check your connection and try again.');
+async function catSamples() {
+  if (!sampleBankPromise) {
+    sampleBankPromise = Promise.all(MEOW_SAMPLES.map(async ({ id, file }) => {
+      const response = await fetch(`${import.meta.env.BASE_URL}${file}`);
+      if (!response.ok) throw new Error('The cat sounds couldn’t load. Check your connection and try again.');
       const decoded = await context().decodeAudioData(await response.arrayBuffer());
-      return { samples: mono(decoded), sampleRate: decoded.sampleRate };
-    })().catch((error) => { samplePromise = null; throw error; });
+      return { id, samples: mono(decoded), sampleRate: decoded.sampleRate };
+    })).catch((error) => { sampleBankPromise = null; throw error; });
   }
-  return samplePromise;
+  return sampleBankPromise;
 }
 
 function drawWave(canvas, samples, color) {
@@ -119,7 +120,7 @@ async function convert() {
   $('progress').value = 0.02;
   status('Finding the melody. Preparing the meows.');
   try {
-    const sample = await catSample();
+    const sampleBank = await catSamples();
     worker = new Worker(new URL('./audio-worker.js', import.meta.url), { type: 'module' });
     worker.onmessage = ({ data }) => {
       if (data.type === 'progress') {
@@ -140,7 +141,7 @@ async function convert() {
         drawWave($('output-wave'), data.samples, '#233bea');
         $('results').hidden = false;
         $('progress').value = 1;
-        status('Done. Your cat cover is ready to play and download.');
+        status(`Done. ${new Set(data.sampleIds).size} different meows in your cat cover. Ready to play and download.`);
         finishWorker();
       }
     };
@@ -148,10 +149,11 @@ async function convert() {
       status('The audio processing stopped. Refresh the page or try a shorter clip.', true);
       finishWorker();
     };
-    // Copies allow retrying without detaching input or the cached cat sample.
-    const inputCopy = input.samples.slice(), sampleCopy = sample.samples.slice();
-    worker.postMessage({ input: inputCopy, rate: input.sampleRate, sample: sampleCopy, sampleRate: sample.sampleRate },
-      [inputCopy.buffer, sampleCopy.buffer]);
+    // Copies allow retrying without detaching input or the cached sample bank.
+    const inputCopy = input.samples.slice();
+    const bankCopy = sampleBank.map((sample) => ({ ...sample, samples: sample.samples.slice() }));
+    worker.postMessage({ input: inputCopy, rate: input.sampleRate, sampleBank: bankCopy },
+      [inputCopy.buffer, ...bankCopy.map((sample) => sample.samples.buffer)]);
   } catch (error) {
     status(error.message || 'Couldn’t make the cat version. Try again.', true);
     finishWorker();

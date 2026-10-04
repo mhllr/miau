@@ -201,19 +201,42 @@ function stretchSmooth(source, count) {
   return output;
 }
 
-export function renderCat(input, rate, rawSample, sampleRate, onProgress = () => {}) {
+export function renderCat(input, rate, sampleBank, onProgress = () => {}) {
+  if (!sampleBank.length) throw new Error('The cat sounds could not be loaded. Refresh the page and try again.');
   const analysis = analyze(input, rate, onProgress);
-  const sample = prepareSample(rawSample, sampleRate);
+  const bank = sampleBank.map((sample, index) => ({
+    ...prepareSample(sample.samples, sample.sampleRate), id: sample.id ?? String(index),
+  }));
   const output = new Float32Array(Math.ceil(input.length / rate * OUTPUT_RATE));
   // Keep relative melody, shifting its register by whole octaves toward the cat.
-  const octave = 2 ** Math.round(Math.log2(sample.pitch / analysis.medianPitch));
+  const octave = 2 ** Math.round(Math.log2(median(bank.map((sample) => sample.pitch)) / analysis.medianPitch));
+  const uses = new Array(bank.length).fill(0);
+  const sampleIds = [];
+  let previous = -1;
   analysis.events.forEach((event, index) => {
     const next = analysis.events[index + 1];
     const length = clamp(event.end - event.start + 0.06, 0.14, 0.85);
     const end = Math.min(event.start + length, next ? next.start : Infinity, output.length / OUTPUT_RATE);
     const count = Math.max(1, Math.floor((end - event.start) * OUTPUT_RATE));
     const start = Math.round(event.start * OUTPUT_RATE);
-    const pitchRatio = clamp(event.pitch * octave / sample.pitch, 0.5, 2);
+    const targetPitch = event.pitch * octave;
+    let candidates = bank.map((sample, i) => ({ sample, i })).filter(({ sample }) =>
+      targetPitch / sample.pitch >= 0.5 && targetPitch / sample.pitch <= 2);
+    if (!candidates.length) {
+      // Extreme notes use the closest source instead of escalating the warp.
+      candidates = bank.map((sample, i) => ({ sample, i })).sort((a, b) =>
+        Math.abs(Math.log2(targetPitch / a.sample.pitch)) - Math.abs(Math.log2(targetPitch / b.sample.pitch))).slice(0, 1);
+    }
+    const alternatives = candidates.filter(({ i }) => i !== previous);
+    if (alternatives.length) candidates = alternatives;
+    const score = ({ sample, i }) => Math.abs(Math.log2(targetPitch / sample.pitch)) * 0.6 +
+      Math.abs(Math.log2((sample.samples.length / OUTPUT_RATE) / (count / OUTPUT_RATE))) * 0.12 + uses[i] * 0.45;
+    candidates.sort((a, b) => score(a) - score(b));
+    const { sample, i } = candidates[0];
+    uses[i]++;
+    previous = i;
+    sampleIds.push(sample.id);
+    const pitchRatio = clamp(targetPitch / sample.pitch, 0.5, 2);
     const gain = 0.8 * Math.sqrt(event.level / analysis.maxRms);
     // Pitch first with continuous sample playback, then independently fit
     // duration using waveform-matched overlaps. No periodic phase resets.
@@ -229,7 +252,7 @@ export function renderCat(input, rate, rawSample, sampleRate, onProgress = () =>
   let peak = 0;
   for (const value of output) peak = Math.max(peak, Math.abs(value));
   if (peak > 0.001) for (let i = 0; i < output.length; i++) output[i] *= 0.9 / peak;
-  return { samples: output, sampleRate: OUTPUT_RATE, meows: analysis.events.length };
+  return { samples: output, sampleRate: OUTPUT_RATE, meows: analysis.events.length, sampleIds };
 }
 
 export function encodeWav(samples, sampleRate) {
