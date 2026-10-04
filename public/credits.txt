@@ -1,0 +1,21 @@
+Miau asset credits
+
+audio/meow.wav
+"Meow of a Siamese cat" by freemaster2, 23 January 2009.
+CC0 1.0 Universal Public Domain Dedication.
+Source: https://www.freesound.org/people/freemaster2/sounds/66518/
+License verified on Wikimedia Commons:
+https://commons.wikimedia.org/wiki/File:Meow_of_a_Siamese_cat_-_freemaster2.wav
+Downloaded from:
+https://upload.wikimedia.org/wikipedia/commons/8/81/Meow_of_a_Siamese_cat_-_freemaster2.wav
+Unmodified original, already trimmed by the Wikimedia contributor.
+
+images/cat.jpg
+Source: https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba
+Photo via Unsplash, distributed under the Unsplash License.
+Downloaded resized and compressed using the source image service.
+https://unsplash.com/license
+
+fonts/bricolage-800.ttf
+Bricolage Grotesque, Google Fonts. SIL Open Font License 1.1.
+License included in fonts/OFL.txt.

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#233bea" />
+    <meta name="description" content="Your voice, performed by a cat. Turn a vocal recording into real meows, then download and send it to a friend. Free, right in your browser." />
+    <title>Miau — your voice, but cat</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23233bea'/%3E%3Ctext x='13' y='45' font-family='sans-serif' font-weight='900' font-size='43' fill='%23edff80'%3Em%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <header class="header">
+      <a class="wordmark" href="./" aria-label="Miau home">miau<span class="wordmark-dot">.</span></a>
+      <span class="header-note">A very unserious voice converter.</span>
+    </header>
+    <main class="main">
+      <section class="intro" aria-labelledby="heading">
+        <h1 id="heading">You sing.<br />Cat sings.<br /><span>Everyone wins.</span></h1>
+        <p class="intro-copy">Your voice, performed by an actual cat.<br class="desktop-break" /> Give us a vocal. Get a meowsterpiece.</p>
+        <figure class="cat-figure">
+          <img src="/images/cat.jpg" alt="A black-and-white cat looking directly at you, ready for its solo" width="720" height="495" fetchpriority="high" />
+          <figcaption><svg class="caption-star" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M2 12h20M5 5l14 14M5 19 19 5" stroke="currentColor" stroke-width="2.5" /></svg> Your new lead singer.</figcaption>
+        </figure>
+      </section>
+      <section class="workbench" aria-labelledby="workbench-title">
+        <div class="workbench-heading"><h2 id="workbench-title">Let’s hear you.</h2><span class="file-limit">60 seconds max</span></div>
+        <div class="drop-zone" id="drop-zone">
+          <svg class="upload-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 31V9m-8 8 8-8 8 8M10 31v8h28v-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          <p class="drop-title" id="file-title">Drop your vocal here</p>
+          <p class="drop-description" id="file-description">Or choose an audio file from your device.</p>
+          <label class="choose-button" for="file-input">Choose a vocal <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></label>
+          <input id="file-input" type="file" accept="audio/*,.wav,.mp3,.m4a,.aac,.ogg,.flac,.aiff,.webm" />
+          <span class="formats">WAV, MP3, M4A &amp; other browser-supported audio · up to 30 MB</span>
+        </div>
+        <div class="demo-line"><span>No vocal handy?</span><button class="text-button" id="demo-button">Try a demo melody</button></div>
+        <p class="demo-explanation" id="demo-explanation" hidden>Demo input: a synthetic melody, not a recorded human voice.</p>
+        <button class="convert-button" id="convert-button" disabled>Make it meow <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m13 3-8 11h6l-1 7 9-12h-6l1-6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg></button>
+        <div class="status-area"><p id="status" role="status" aria-live="polite">A clear solo voice makes the best cat.</p><progress id="progress" max="1" value="0" aria-label="Creating cat audio" hidden></progress></div>
+        <section class="results" id="results" aria-labelledby="result-title" hidden>
+          <div class="result-heading"><h3 id="result-title">Cat’s out of the bag.</h3><span id="meow-count"></span></div>
+          <div class="track"><div class="track-label"><span>Your vocal</span><span id="duration"></span></div><canvas id="input-wave" width="900" height="100" aria-hidden="true"></canvas><audio id="source-audio" controls preload="metadata" aria-label="Play your original vocal"></audio></div>
+          <div class="track cat-track"><div class="track-label"><span>The cat version</span><span>100% meow</span></div><canvas id="output-wave" width="900" height="100" aria-hidden="true"></canvas><audio id="cat-audio" controls preload="metadata" aria-label="Play the cat version"></audio></div>
+          <a class="download-button" id="download-button" download="miau.wav">Download your meows <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+          <p class="result-note">A WAV file. Ready for the group chat.</p>
+        </section>
+        <p class="privacy-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.7"/></svg> Your recording stays on your device.</p>
+      </section>
+    </main>
+    <footer class="footer"><p>Made for fun. Best with singing, humming &amp; questionable talent.</p><details><summary>Meet the cat &amp; credits</summary><p>The real meow is <a href="https://commons.wikimedia.org/wiki/File:Meow_of_a_Siamese_cat_-_freemaster2.wav" target="_blank" rel="noopener noreferrer">a Siamese cat recorded by freemaster2</a>, released under <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">CC0</a>. Cat photo via <a href="https://unsplash.com/photos/7GX5aICb5i4" target="_blank" rel="noopener noreferrer">Unsplash</a>. Bricolage Grotesque is licensed under the SIL Open Font License. Melody tracking is approximate; solo vocals work best.</p></details></footer>
+  </body>
+</html>
