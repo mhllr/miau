@@ -139,14 +139,74 @@ export function prepareSample(sample, rate) {
   return { samples: trimmed, pitch: median(pitches) || 550 };
 }
 
+// Waveform-similarity overlap-add (WSOLA). Match each incoming frame to
+// the outgoing waveform, rather than snapping to one assumed pitch period.
+// A real meow's pitch and formants change throughout the recording.
+function stretchSmooth(source, count) {
+  if (source.length === count) return source.slice();
+  const output = new Float32Array(count);
+  const weights = new Float32Array(count);
+  const frameSize = Math.max(16, Math.floor(Math.min(1536, count / 3, source.length / 3) / 2) * 2);
+  const hop = frameSize / 2;
+  const maxSourceStart = Math.max(0, source.length - frameSize);
+  const lastOutputStart = Math.max(0, count - frameSize);
+  const positions = [];
+  for (let position = 0; position < lastOutputStart; position += hop) positions.push(position);
+  positions.push(lastOutputStart);
+  const searchRadius = 480; // 20 ms accommodates low voiced pitches.
+  let previous = 0, previousPosition = 0;
+  for (const position of positions) {
+    const expected = Math.round(clamp(position / Math.max(1, count - frameSize), 0, 1) * maxSourceStart);
+    let selected = expected;
+    if (position > 0) {
+      const advance = position - previousPosition;
+      const overlap = frameSize - advance;
+      const reference = previous + advance;
+      const low = Math.max(0, expected - searchRadius);
+      const high = Math.min(maxSourceStart, expected + searchRadius);
+      let referenceEnergy = 0;
+      for (let j = 0; j < overlap; j += 4) referenceEnergy += (source[reference + j] || 0) ** 2;
+      if (referenceEnergy > 1e-8) {
+        const score = (candidate) => {
+          let dot = 0, energy = 0;
+          for (let j = 0; j < overlap; j += 4) {
+            const value = source[candidate + j] || 0;
+            dot += value * (source[reference + j] || 0);
+            energy += value * value;
+          }
+          return energy > 1e-8 ? dot / Math.sqrt(referenceEnergy * energy) -
+            0.01 * Math.abs(candidate - expected) / searchRadius : -Infinity;
+        };
+        let best = score(expected);
+        for (let candidate = low; candidate <= high; candidate += 4) {
+          const match = score(candidate);
+          if (match > best) { best = match; selected = candidate; }
+        }
+        const coarse = selected;
+        for (let candidate = Math.max(low, coarse - 3); candidate <= Math.min(high, coarse + 3); candidate++) {
+          const match = score(candidate);
+          if (match > best) { best = match; selected = candidate; }
+        }
+      }
+    }
+    for (let j = 0; j < frameSize && position + j < count; j++) {
+      const weight = 0.5 - 0.5 * Math.cos(2 * Math.PI * j / frameSize);
+      output[position + j] += (source[selected + j] || 0) * weight;
+      weights[position + j] += weight;
+    }
+    previous = selected;
+    previousPosition = position;
+  }
+  for (let i = 0; i < count; i++) if (weights[i] > 1e-6) output[i] /= weights[i];
+  return output;
+}
+
 export function renderCat(input, rate, rawSample, sampleRate, onProgress = () => {}) {
   const analysis = analyze(input, rate, onProgress);
   const sample = prepareSample(rawSample, sampleRate);
   const output = new Float32Array(Math.ceil(input.length / rate * OUTPUT_RATE));
   // Keep relative melody, shifting its register by whole octaves toward the cat.
   const octave = 2 ** Math.round(Math.log2(sample.pitch / analysis.medianPitch));
-  const grainSize = 960, grainHop = 240;
-  const period = OUTPUT_RATE / sample.pitch;
   analysis.events.forEach((event, index) => {
     const next = analysis.events[index + 1];
     const length = clamp(event.end - event.start + 0.06, 0.14, 0.85);
@@ -155,27 +215,14 @@ export function renderCat(input, rate, rawSample, sampleRate, onProgress = () =>
     const start = Math.round(event.start * OUTPUT_RATE);
     const pitchRatio = clamp(event.pitch * octave / sample.pitch, 0.5, 2);
     const gain = 0.8 * Math.sqrt(event.level / analysis.maxRms);
-    // Pitch-aware granular compression keeps the full "me-ow" shape even
-    // on short syllables; whole-period grain alignment limits phase smearing.
-    const eventBuffer = new Float32Array(count);
-    const weights = new Float32Array(count);
-    for (let center = 0; center < count + grainHop; center += grainHop) {
-      const sourceCenter = Math.round((center / count * sample.samples.length) / period) * period;
-      for (let j = -grainSize / 2; j < grainSize / 2; j++) {
-        const dest = center + j;
-        if (dest < 0 || dest >= count) continue;
-        const position = sourceCenter + j * pitchRatio;
-        const p = Math.floor(position), fraction = position - p;
-        if (p < 0 || p + 1 >= sample.samples.length) continue;
-        const weight = 0.5 + 0.5 * Math.cos(2 * Math.PI * j / grainSize);
-        eventBuffer[dest] += (sample.samples[p] * (1 - fraction) + sample.samples[p + 1] * fraction) * weight;
-        weights[dest] += weight;
-      }
-    }
+    // Pitch first with continuous sample playback, then independently fit
+    // duration using waveform-matched overlaps. No periodic phase resets.
+    const pitched = resample(sample.samples, OUTPUT_RATE * pitchRatio, OUTPUT_RATE);
+    const eventBuffer = stretchSmooth(pitched, count);
     const fade = Math.min(240, count / 4);
     for (let j = 0; j < count && start + j < output.length; j++) {
       const envelope = Math.min(1, j / fade, (count - 1 - j) / fade);
-      output[start + j] += eventBuffer[j] / Math.max(1, weights[j]) * gain * envelope;
+      output[start + j] += eventBuffer[j] * gain * envelope;
     }
     onProgress(0.65 + (index + 1) / analysis.events.length * 0.3);
   });

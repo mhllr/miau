@@ -27,7 +27,7 @@ npm run build
 
 - Web Audio decodes files locally and mixes channels to mono.
 - A worker measures loudness, estimates pitch using YIN, and identifies phrases, note changes, and syllable-like onsets.
-- Pitch-aware granular rendering compresses a real meow recording into each event, following the input melody and relative loudness.
+- Continuous sample resampling sets each meow's pitch. Waveform-similarity overlap-add (WSOLA) fits its duration using correlated, phase-coherent overlaps, following the input melody and relative loudness without fixed-rate grain resets.
 - The melody shifts by whole octaves toward the sample’s natural register where needed.
 - Output is mono, 24 kHz, 16-bit PCM WAV, with the input’s duration and a normalized peak below clipping.
 - There are no recording uploads, analytics, external runtime assets, API keys, or backend services. The page fetches its bundled static assets only.
@@ -46,7 +46,7 @@ npm run dev
 npm run test:browser
 ```
 
-The DSP checks cover harmonic pitch detection, silence and noise rejection, timing, melody direction in the cat output, safe levels, WAV headers, and a full-length processing budget. The browser check exercises desktop/mobile file decoding, conversion, playback, download, and error recovery. Set `TEST_URL` to check a production deployment instead.
+The DSP checks cover phase-coherent time compression at multiple pitches, harmonic pitch detection, silence and noise rejection, timing, melody direction in the cat output, safe levels, WAV headers, and a full-length processing budget. The browser check exercises desktop/mobile file decoding, conversion, playback, download, and error recovery. Set `TEST_URL` to check a production deployment instead.
 
 For Chromium, Firefox, and WebKit engine checks, run `npx playwright install chromium firefox webkit`, then `npm run test:engines`. Set `VOCAL_FIXTURE` to the path of a 16-bit PCM WAV voice recording to exercise a real vocal fixture instead of the synthetic melody.
 

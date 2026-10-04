@@ -49,7 +49,7 @@ After scope confirmation, build the smallest end-to-end audio path first: select
 
 ## Delivery verification
 
-- All eight DSP checks pass, including melody direction in the rendered cat output, silence/noise rejection, timing, peak levels, WAV encoding, and a 60-second processing budget.
+- DSP checks cover phase-coherent rendering, melody direction in the rendered cat output, silence/noise rejection, timing, peak levels, WAV encoding, and a 60-second processing budget.
 - Desktop and mobile Chromium checks pass for decoding, conversion, playback, download, invalid files, silence, and recovery.
 - Chromium, Firefox, and WebKit checks pass locally and on the deployed site, including a spoken-voice WAV fixture and the 60-second limit.
 - GitHub Actions builds and deploys the static site after changes to main.

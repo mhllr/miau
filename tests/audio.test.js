@@ -7,6 +7,44 @@ import { readWav } from './helpers.js';
 const cat = readWav(new URL('../public/audio/meow.wav', import.meta.url));
 const energy = (samples) => samples.reduce((sum, value) => sum + value * value, 0);
 
+function toneResidual(samples, frequency, start, end) {
+  let ss = 0, cc = 0, sc = 0, ys = 0, yc = 0, total = 0;
+  for (let i = start; i < end; i++) {
+    const phase = 2 * Math.PI * frequency * i / OUTPUT_RATE;
+    const s = Math.sin(phase), c = Math.cos(phase), y = samples[i];
+    ss += s * s; cc += c * c; sc += s * c;
+    ys += y * s; yc += y * c; total += y * y;
+  }
+  const determinant = ss * cc - sc * sc;
+  const a = (ys * cc - yc * sc) / determinant;
+  const b = (yc * ss - ys * sc) / determinant;
+  let residual = 0;
+  for (let i = start; i < end; i++) {
+    const phase = 2 * Math.PI * frequency * i / OUTPUT_RATE;
+    residual += (samples[i] - a * Math.sin(phase) - b * Math.cos(phase)) ** 2;
+  }
+  return residual / total;
+}
+
+test('compressing a meow preserves coherent voiced audio instead of adding grain-rate modulation', () => {
+  // A pure voiced source exposes phase-reset sidebands that a raspy real
+  // meow can mask. Exercise the full renderer, with genuine duration compression.
+  const voice = Float32Array.from({ length: OUTPUT_RATE }, (_, i) =>
+    i >= OUTPUT_RATE * 0.1 && i < OUTPUT_RATE * 0.55 ? 0.35 * Math.sin(2 * Math.PI * 220 * i / OUTPUT_RATE) : 0);
+  for (const frequency of [220, 330, 440]) {
+    const source = Float32Array.from({ length: OUTPUT_RATE * 1.5 }, (_, i) =>
+      0.5 * Math.sin(2 * Math.PI * frequency * i / OUTPUT_RATE));
+    const result = renderCat(voice, OUTPUT_RATE, source, OUTPUT_RATE);
+    const expectedPitch = 220 * 2 ** Math.round(Math.log2(frequency / 220));
+    // Allow the pitch estimator's sub-percent tuning error, but reject
+    // sidebands, flutter, or phase breaks across the full voiced region.
+    const residual = Math.min(...Array.from({ length: 41 }, (_, i) => toneResidual(
+      result.samples, expectedPitch * (1 + (i - 20) / 4000),
+      Math.round(OUTPUT_RATE * 0.16), Math.round(OUTPUT_RATE * 0.59))));
+    assert.ok(residual < 0.025, `${frequency} Hz source: unwanted modulation is ${(residual * 100).toFixed(1)}% of voiced energy`);
+  }
+});
+
 test('tracks fundamental pitch rather than a dominant second harmonic', () => {
   for (const frequency of [85, 110, 220, 440, 780]) {
     const samples = Float32Array.from({ length: 1600 }, (_, i) =>
@@ -45,9 +83,14 @@ test('renders timed cat events from a melody, retaining silence and avoiding cli
   for (const value of result.samples) assert.ok(Number.isFinite(value) && Math.abs(value) <= 0.901);
   const analysis = analyze(demo.samples, demo.sampleRate);
   assert.ok(analysis.events[2].pitch > analysis.events[0].pitch * 1.4);
-  const catAnalysis = analyze(result.samples, result.sampleRate);
-  assert.ok(catAnalysis.events[2].pitch > catAnalysis.events[0].pitch * 1.3, 'cat melody should rise with the input');
-  assert.ok(catAnalysis.events[5].pitch < catAnalysis.events[2].pitch * 0.8, 'cat melody should descend with the input');
+  // A natural meow bends pitch within a single note. Compare each known
+  // input-note interval, not the number of pitch regions in the cat itself.
+  const catPitches = analysis.events.map((event, index) => {
+    const end = analysis.events[index + 1]?.start ?? result.samples.length / OUTPUT_RATE;
+    return analyze(result.samples.slice(Math.round(event.start * OUTPUT_RATE), Math.round(end * OUTPUT_RATE)), OUTPUT_RATE).medianPitch;
+  });
+  assert.ok(catPitches[2] > catPitches[0] * 1.3, 'cat melody should rise with the input');
+  assert.ok(catPitches[5] < catPitches[2] * 0.8, 'cat melody should descend with the input');
 });
 
 test('exports an interoperable mono PCM WAV with accurate size and duration', () => {
