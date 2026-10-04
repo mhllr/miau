@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T09:43:00Z",
+  "title": "Design System: Miau",
+  "extensions": {
+    "colorMeta": {
+      "blue": { "role": "primary", "displayName": "Electric Cobalt", "tonalRamp": ["oklch(15% 0.25691 267.15)", "oklch(26% 0.25691 267.15)", "oklch(38% 0.25691 267.15)", "oklch(49% 0.25691 267.15)", "oklch(61% 0.25691 267.15)", "oklch(72% 0.25691 267.15)", "oklch(84% 0.25691 267.15)", "oklch(95% 0.25691 267.15)"] },
+      "yellow": { "role": "secondary", "displayName": "Acid Yellow", "tonalRamp": ["oklch(15% 0.15293 116.02)", "oklch(26% 0.15293 116.02)", "oklch(38% 0.15293 116.02)", "oklch(49% 0.15293 116.02)", "oklch(61% 0.15293 116.02)", "oklch(72% 0.15293 116.02)", "oklch(84% 0.15293 116.02)", "oklch(95% 0.15293 116.02)"] },
+      "white": { "role": "neutral", "displayName": "Cool White", "tonalRamp": ["oklch(15% 0.00935 279.69)", "oklch(26% 0.00935 279.69)", "oklch(38% 0.00935 279.69)", "oklch(49% 0.00935 279.69)", "oklch(61% 0.00935 279.69)", "oklch(72% 0.00935 279.69)", "oklch(84% 0.00935 279.69)", "oklch(95% 0.00935 279.69)"] },
+      "ink": { "role": "neutral", "displayName": "Midnight Ink", "tonalRamp": ["oklch(15% 0.12616 270.79)", "oklch(26% 0.12616 270.79)", "oklch(38% 0.12616 270.79)", "oklch(49% 0.12616 270.79)", "oklch(61% 0.12616 270.79)", "oklch(72% 0.12616 270.79)", "oklch(84% 0.12616 270.79)", "oklch(95% 0.12616 270.79)"] },
+      "muted": { "role": "secondary", "displayName": "Quiet Olive", "tonalRamp": ["oklch(15% 0.04067 126.53)", "oklch(26% 0.04067 126.53)", "oklch(38% 0.04067 126.53)", "oklch(49% 0.04067 126.53)", "oklch(61% 0.04067 126.53)", "oklch(72% 0.04067 126.53)", "oklch(84% 0.04067 126.53)", "oklch(95% 0.04067 126.53)"] },
+      "line": { "role": "secondary", "displayName": "Olive Rule", "tonalRamp": ["oklch(15% 0.12628 115.98)", "oklch(26% 0.12628 115.98)", "oklch(38% 0.12628 115.98)", "oklch(49% 0.12628 115.98)", "oklch(61% 0.12628 115.98)", "oklch(72% 0.12628 115.98)", "oklch(84% 0.12628 115.98)", "oklch(95% 0.12628 115.98)"] },
+      "drop-border": { "role": "secondary", "displayName": "Upload Olive", "tonalRamp": ["oklch(15% 0.09970 117.32)", "oklch(26% 0.09970 117.32)", "oklch(38% 0.09970 117.32)", "oklch(49% 0.09970 117.32)", "oklch(61% 0.09970 117.32)", "oklch(72% 0.09970 117.32)", "oklch(84% 0.09970 117.32)", "oklch(95% 0.09970 117.32)"] },
+      "blue-hover": { "role": "primary", "displayName": "Deep Cobalt", "tonalRamp": ["oklch(15% 0.23017 266.27)", "oklch(26% 0.23017 266.27)", "oklch(38% 0.23017 266.27)", "oklch(49% 0.23017 266.27)", "oklch(61% 0.23017 266.27)", "oklch(72% 0.23017 266.27)", "oklch(84% 0.23017 266.27)", "oklch(95% 0.23017 266.27)"] },
+      "disabled-bg": { "role": "secondary", "displayName": "Paused Lime", "tonalRamp": ["oklch(15% 0.11991 116.04)", "oklch(26% 0.11991 116.04)", "oklch(38% 0.11991 116.04)", "oklch(49% 0.11991 116.04)", "oklch(61% 0.11991 116.04)", "oklch(72% 0.11991 116.04)", "oklch(84% 0.11991 116.04)", "oklch(95% 0.11991 116.04)"] },
+      "disabled-text": { "role": "secondary", "displayName": "Paused Olive", "tonalRamp": ["oklch(15% 0.05683 122.58)", "oklch(26% 0.05683 122.58)", "oklch(38% 0.05683 122.58)", "oklch(49% 0.05683 122.58)", "oklch(61% 0.05683 122.58)", "oklch(72% 0.05683 122.58)", "oklch(84% 0.05683 122.58)", "oklch(95% 0.05683 122.58)"] },
+      "error": { "role": "tertiary", "displayName": "Error Red", "tonalRamp": ["oklch(15% 0.14324 22.42)", "oklch(26% 0.14324 22.42)", "oklch(38% 0.14324 22.42)", "oklch(49% 0.14324 22.42)", "oklch(61% 0.14324 22.42)", "oklch(72% 0.14324 22.42)", "oklch(84% 0.14324 22.42)", "oklch(95% 0.14324 22.42)"] },
+      "progress-track": { "role": "secondary", "displayName": "Progress Lime", "tonalRamp": ["oklch(15% 0.11282 115.69)", "oklch(26% 0.11282 115.69)", "oklch(38% 0.11282 115.69)", "oklch(49% 0.11282 115.69)", "oklch(61% 0.11282 115.69)", "oklch(72% 0.11282 115.69)", "oklch(84% 0.11282 115.69)", "oklch(95% 0.11282 115.69)"] },
+      "audio-panel": { "role": "secondary", "displayName": "Playback Lime", "tonalRamp": ["oklch(15% 0.08236 116.09)", "oklch(26% 0.08236 116.09)", "oklch(38% 0.08236 116.09)", "oklch(49% 0.08236 116.09)", "oklch(61% 0.08236 116.09)", "oklch(72% 0.08236 116.09)", "oklch(84% 0.08236 116.09)", "oklch(95% 0.08236 116.09)"] },
+      "footer-rule": { "role": "neutral", "displayName": "Periwinkle Rule", "tonalRamp": ["oklch(15% 0.16965 274.27)", "oklch(26% 0.16965 274.27)", "oklch(38% 0.16965 274.27)", "oklch(49% 0.16965 274.27)", "oklch(61% 0.16965 274.27)", "oklch(72% 0.16965 274.27)", "oklch(84% 0.16965 274.27)", "oklch(95% 0.16965 274.27)"] },
+      "source-wave": { "role": "secondary", "displayName": "Source Olive", "tonalRamp": ["oklch(15% 0.07377 123.66)", "oklch(26% 0.07377 123.66)", "oklch(38% 0.07377 123.66)", "oklch(49% 0.07377 123.66)", "oklch(61% 0.07377 123.66)", "oklch(72% 0.07377 123.66)", "oklch(84% 0.07377 123.66)", "oklch(95% 0.07377 123.66)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Main promise. The primitive is the observed 88px desktop upper bound; source CSS uses clamp(54px, 6.3vw, 88px), 64px at max-width 1050px, and clamp(49px, 11.8vw, 78px) at max-width 760px." },
+      "wordmark": { "displayName": "Wordmark", "purpose": "Home link, 44px desktop and 36px at max-width 760px." },
+      "headline": { "displayName": "Workbench Headline", "purpose": "Work-state heading, 30px desktop and 28px at max-width 760px." },
+      "title": { "displayName": "Result Title", "purpose": "24px result heading; line height is not explicitly set in source." },
+      "body": { "displayName": "Introductory Body", "purpose": "18px introductory copy, reduced to 16px at max-width 760px." },
+      "upload-title": { "displayName": "Upload Title", "purpose": "Filename or empty-upload instruction; wraps arbitrary filenames." },
+      "action": { "displayName": "Primary Action", "purpose": "Conversion and download labels." },
+      "label": { "displayName": "Chooser / Caption Label", "purpose": "File chooser and tilted photo caption." },
+      "status": { "displayName": "Status", "purpose": "Polite live status with textual errors; error weight is 600." },
+      "metadata": { "displayName": "Metadata", "purpose": "Clip limits, formats, counts, durations, privacy, and result notes. Durations/counts use tabular numerals." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "upload-transition", "value": "background 180ms ease-out, border-color 180ms ease-out", "purpose": "Drop-zone drag feedback." },
+      { "name": "action-transition", "value": "background 180ms ease-out", "purpose": "Enabled conversion and download hover." },
+      { "name": "reduced-motion", "value": "@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }", "purpose": "Shipped reduced-motion override." }
+    ],
+    "breakpoints": [
+      { "name": "intermediate-max", "value": "1050px" },
+      { "name": "mobile-max", "value": "760px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Conversion Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Full-width conversion action; native disabled attribute selects the paused state.",
+      "html": "<button class=\"ds-convert\" type=\"button\">Make it meow <svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"m13 3-8 11h6l-1 7 9-12h-6l1-6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\" /></svg></button>",
+      "css": ".ds-convert { display:flex; align-items:center; justify-content:center; gap:13px; width:100%; border:0; border-radius:8px; background:var(--blue, #233bea); color:var(--white, #f7f8ff); padding:17px 20px; font:700 17px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; cursor:pointer; touch-action:manipulation; transition:background 180ms ease-out; } .ds-convert svg { width:22px; height:22px; flex:none; } .ds-convert:hover:not(:disabled) { background:#1429c2; } .ds-convert:focus-visible { outline:3px solid currentColor; outline-offset:5px; } .ds-convert:disabled { background:#c3d173; color:#4d5834; cursor:not-allowed; } @media (prefers-reduced-motion:reduce) { .ds-convert { transition:none !important; } }"
+    },
+    {
+      "name": "WAV Download",
+      "kind": "button",
+      "refersTo": "button-download",
+      "description": "Anchor variant of the main action. Runtime supplies the actual WAV blob URL and filename.",
+      "html": "<a class=\"ds-download\" download=\"miau.wav\" role=\"link\" tabindex=\"0\">Download your meows <svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg></a>",
+      "css": ".ds-download { display:flex; align-items:center; justify-content:center; gap:13px; width:100%; border:0; border-radius:8px; background:var(--blue, #233bea); color:var(--white, #f7f8ff); padding:17px 20px; font:700 17px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-decoration:none; touch-action:manipulation; transition:background 180ms ease-out; } .ds-download svg { width:22px; height:22px; flex:none; } .ds-download:hover { background:#1429c2; } .ds-download:focus-visible { outline:3px solid currentColor; outline-offset:5px; } @media (prefers-reduced-motion:reduce) { .ds-download { transition:none !important; } }"
+    },
+    {
+      "name": "Native File Chooser",
+      "kind": "input",
+      "refersTo": "button-choose",
+      "description": "Visible label plus clipped native input. Keyboard input focus outlines the visible chooser.",
+      "html": "<div class=\"ds-chooser-wrap\"><label class=\"ds-choose\" for=\"ds-vocal-input\">Choose a vocal <svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg></label><input class=\"ds-file-input\" id=\"ds-vocal-input\" type=\"file\" accept=\"audio/*,.wav,.mp3,.m4a,.aac,.ogg,.flac,.aiff,.webm\" /></div>",
+      "css": ".ds-chooser-wrap { position:relative; } .ds-choose { display:inline-flex; gap:18px; align-items:center; padding:12px 20px; background:var(--ink, #18216a); color:var(--white, #f7f8ff); font:600 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; border-radius:7px; cursor:pointer; touch-action:manipulation; } .ds-choose svg { width:22px; height:22px; flex:none; } .ds-choose:hover { background:var(--blue, #233bea); } .ds-file-input { position:absolute; width:1px; height:1px; padding:0; clip-path:inset(50%); overflow:hidden; white-space:nowrap; } .ds-choose:focus-visible, .ds-chooser-wrap:has(.ds-file-input:focus-visible) .ds-choose { outline:3px solid var(--blue, #233bea); outline-offset:5px; }"
+    },
+    {
+      "name": "Demo Text Action",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Small underlined action next to plain-language demo guidance.",
+      "html": "<button class=\"ds-text-action\" type=\"button\">Try a demo melody</button>",
+      "css": ".ds-text-action { background:none; border:0; padding:5px 3px; color:var(--ink, #18216a); text-decoration:underline; text-underline-offset:4px; font:600 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; cursor:pointer; touch-action:manipulation; } .ds-text-action:hover { color:var(--blue, #233bea); } .ds-text-action:focus-visible { outline:3px solid currentColor; outline-offset:5px; } .ds-text-action:disabled { opacity:0.55; cursor:not-allowed; }"
+    },
+    {
+      "name": "Upload Boundary",
+      "kind": "input",
+      "refersTo": "upload-field",
+      "description": "Empty upload presentation. Runtime adds ds-has-file or ds-dragging for the corresponding border and surface states.",
+      "html": "<div class=\"ds-drop-zone\"><svg class=\"ds-upload-icon\" viewBox=\"0 0 48 48\" fill=\"none\" aria-hidden=\"true\"><path d=\"M24 31V9m-8 8 8-8 8 8M10 31v8h28v-8\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg><p class=\"ds-drop-title\">Drop your vocal here</p><p class=\"ds-drop-description\">Or choose an audio file from your device.</p><label class=\"ds-drop-choose\" for=\"ds-drop-input\">Choose a vocal <svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg></label><input class=\"ds-drop-input\" id=\"ds-drop-input\" type=\"file\" accept=\"audio/*,.wav,.mp3,.m4a,.aac,.ogg,.flac,.aiff,.webm\" /><span class=\"ds-formats\">WAV, MP3, M4A &amp; other browser-supported audio · up to 30 MB</span></div>",
+      "css": ".ds-drop-zone { padding:27px 18px 22px; border:1px dashed #758137; border-radius:10px; text-align:center; transition:background 180ms ease-out, border-color 180ms ease-out; position:relative; color:var(--ink, #18216a); font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-drop-zone.ds-dragging { background:var(--white, #f7f8ff); border-color:var(--blue, #233bea); } .ds-drop-zone.ds-has-file { border-style:solid; } .ds-upload-icon { width:43px; height:43px; display:block; margin:0 auto 16px; } .ds-drop-title { font-weight:700; font-size:19px; margin:0 0 8px; overflow-wrap:anywhere; } .ds-drop-description { font-size:14px; line-height:1.5; margin:0 0 19px; } .ds-drop-choose { display:inline-flex; gap:18px; align-items:center; padding:12px 20px; background:var(--ink, #18216a); color:var(--white, #f7f8ff); font-weight:600; font-size:14px; border-radius:7px; cursor:pointer; touch-action:manipulation; } .ds-drop-choose svg { width:22px; height:22px; flex:none; } .ds-drop-choose:hover { background:var(--blue, #233bea); } .ds-drop-input { position:absolute; width:1px; height:1px; padding:0; clip-path:inset(50%); overflow:hidden; white-space:nowrap; } .ds-drop-zone:has(.ds-drop-input:focus-visible) .ds-drop-choose { outline:3px solid var(--blue, #233bea); outline-offset:5px; } .ds-formats { display:block; font-size:12px; line-height:1.6; color:var(--muted, #424c34); margin-top:18px; } @media (max-width:760px) { .ds-drop-zone { padding-left:14px; padding-right:14px; } } @media (prefers-reduced-motion:reduce) { .ds-drop-zone { transition:none !important; } }"
+    },
+    {
+      "name": "Working Surface",
+      "kind": "card",
+      "refersTo": "workbench",
+      "description": "Flat acid-yellow container and wrapping work-state heading. Padding follows the shipped media queries.",
+      "html": "<section class=\"ds-workbench\" aria-labelledby=\"ds-workbench-title\"><div class=\"ds-workbench-heading\"><h2 id=\"ds-workbench-title\" class=\"ds-workbench-title\">Let’s hear you.</h2><span class=\"ds-file-limit\">60 seconds max</span></div></section>",
+      "css": ".ds-workbench { background:var(--yellow, #edff80); color:var(--ink, #18216a); padding:32px; border-radius:var(--radius, 14px); font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-workbench-heading { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:24px; } .ds-workbench-title { font-family:Bricolage, sans-serif; font-weight:800; font-size:30px; line-height:1.1; letter-spacing:-0.025em; text-wrap:balance; margin:0; } .ds-file-limit { font-size:12px; white-space:nowrap; } @media (max-width:1050px) { .ds-workbench { padding:25px; } .ds-workbench-heading { flex-wrap:wrap; gap:10px; } } @media (max-width:760px) { .ds-workbench { padding:24px 20px; } .ds-workbench-title { font-size:28px; } }"
+    },
+    {
+      "name": "Miau Home Link",
+      "kind": "nav",
+      "refersTo": "wordmark",
+      "description": "Heavy home wordmark with acid-yellow punctuation; the actual page places it on cobalt.",
+      "html": "<header class=\"ds-header\"><a class=\"ds-wordmark\" href=\"./\" aria-label=\"Miau home\">miau<span class=\"ds-wordmark-dot\">.</span></a><span class=\"ds-header-note\">A very unserious voice converter.</span></header>",
+      "css": ".ds-header { background:var(--blue, #233bea); color:var(--white, #f7f8ff); display:flex; align-items:center; justify-content:space-between; max-width:1400px; margin:0 auto; padding:34px 64px; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-wordmark { color:var(--white, #f7f8ff); font:800 44px/1 Bricolage, sans-serif; text-decoration:none; letter-spacing:-0.04em; } .ds-wordmark-dot { color:var(--yellow, #edff80); } .ds-header-note { font-size:14px; } .ds-wordmark:focus-visible { outline:3px solid currentColor; outline-offset:5px; } @media (max-width:1050px) { .ds-header { padding-left:36px; padding-right:36px; } } @media (max-width:760px) { .ds-header { padding:24px 22px 20px; } .ds-wordmark { font-size:36px; } .ds-header-note { font-size:12px; max-width:140px; text-align:right; line-height:1.5; } }"
+    },
+    {
+      "name": "Duet Track Row",
+      "kind": "custom",
+      "description": "Native playback plus label and signal canvas. Canvas is intentionally blank in the static preview: only real runtime samples draw the waveform.",
+      "html": "<div class=\"ds-track\"><div class=\"ds-track-label\"><span>The cat version</span><span>100% meow</span></div><canvas class=\"ds-wave\" width=\"900\" height=\"100\" aria-hidden=\"true\"></canvas><audio class=\"ds-audio\" controls preload=\"metadata\" aria-label=\"Play the cat version\"></audio></div>",
+      "css": ".ds-track { margin-top:24px; color:var(--ink, #18216a); font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-track-label { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:13px; font-weight:600; } .ds-track-label span:last-child { font-weight:400; font-size:12px; font-variant-numeric:tabular-nums; } .ds-wave { display:block; width:100%; height:46px; margin:10px 0; } .ds-audio { display:block; width:100%; height:38px; } .ds-audio::-webkit-media-controls-panel { background:#e3eeaf; } .ds-audio:focus-visible { outline:3px solid currentColor; }"
+    },
+    {
+      "name": "Processing Progress",
+      "kind": "custom",
+      "refersTo": "progress",
+      "description": "Native progress element exposed while processing; the application hides it when idle.",
+      "html": "<progress class=\"ds-progress\" max=\"1\" value=\"0.65\" aria-label=\"Creating cat audio\"></progress>",
+      "css": ".ds-progress { display:block; width:100%; height:6px; border:0; border-radius:3px; overflow:hidden; margin-top:15px; background:#cedb83; accent-color:var(--blue, #233bea); } .ds-progress::-webkit-progress-bar { background:#cedb83; } .ds-progress::-webkit-progress-value { background:var(--blue, #233bea); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Karaoke Duet Song Sheet",
+    "overview": "Miau is loud, friendly, and deliberately unserious. Blunt, tightly set display lettering and broad electric color fields give a small audio tool the immediacy of a lyric sheet. A real cat photograph supplies the personality; the interface stays practical, with clear file selection, understated supporting text, and native playback controls.\n\nThe world is flat and spacious outside the workbench, compact and orderly inside it. Personality comes from scale, color contrast, a lightly tilted photo caption, and the actual sound comparison rather than extra interface chrome. The same workbench carries input, progress, and output, so a playful promise resolves into something visitors can hear and keep.",
+    "keyCharacteristics": [
+      "Electric cobalt ground and an acid-yellow working surface.",
+      "Self-hosted, heavy Bricolage Grotesque display lettering with neutral system text.",
+      "Rounded rectangles, thin rules, and flat surfaces without shadows.",
+      "Real cat photography and signal-derived rectangular waveform bars.",
+      "Direct, visible controls with restrained color-only transitions."
+    ],
+    "rules": [
+      { "name": "The Two Fields Rule", "body": "Use cobalt as the surrounding ground and acid yellow as the working surface; reserve their supporting tones for control states, guidance, and separators.", "section": "colors" },
+      { "name": "The Two Voices Rule", "body": "Keep expressive Bricolage lettering for the wordmark and headings; use neutral system text for instructions, controls, and measurements.", "section": "typography" },
+      { "name": "The Flat Signal Rule", "body": "Separate regions with broad color fields and thin rules; keep signal bars and controls flat rather than adding dimensional decoration.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** preserve the cobalt ground, acid-yellow working field, and legible ink/white text assignments.",
+      "**Do** pair Bricolage headings with neutral system instructions and native controls.",
+      "**Do** retain the actual responsive reflow, full-width actions, and wrapping workbench heading.",
+      "**Do** keep visible keyboard focus, textual status/error feedback, and reduced-motion behavior.",
+      "**Do** use actual audio samples for waveform geometry and clearly label the synthetic demo input."
+    ],
+    "donts": [
+      "**Don't** add shadows or dimensional control effects to the flat fields and thin-rule vocabulary.",
+      "**Don't** turn the tilted photo caption into a repeated decorative badge or eyebrow pattern.",
+      "**Don't** replace real signal bars with invented waveform decoration.",
+      "**Don't** use disabled olive tones for enabled actions or omit the textual explanation of an error.",
+      "**Don't** assume the browser-owned audio controls have identical appearance across engines."
+    ]
+  }
+}

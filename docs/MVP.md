@@ -1,6 +1,6 @@
 # Miau browser demo
 
-Status: approved by the user; implementation underway.
+Status: implemented and published at https://mhllr.github.io/miau/.
 
 ## Goal
 
@@ -46,3 +46,11 @@ Use a short, clean sung phrase. The demo should produce unmistakable cat meows t
 ## Recommended next action
 
 After scope confirmation, build the smallest end-to-end audio path first: select a vocal clip, render real meows, preview, and download. Validate the sound before polishing the shareable page, then deploy it to a public URL.
+
+## Delivery verification
+
+- All eight DSP checks pass, including melody direction in the rendered cat output, silence/noise rejection, timing, peak levels, WAV encoding, and a 60-second processing budget.
+- Desktop and mobile Chromium checks pass for decoding, conversion, playback, download, invalid files, silence, and recovery.
+- Chromium, Firefox, and WebKit checks pass locally and on the deployed site, including a spoken-voice WAV fixture and the 60-second limit.
+- GitHub Actions builds and deploys the static site after changes to main.
+- The actual meow is freemaster2's CC0 Siamese cat recording; its source and all bundled asset credits are included in public/credits.txt.

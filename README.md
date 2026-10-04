@@ -2,6 +2,8 @@
 
 Your voice, but cat. A static browser demo that turns an uploaded vocal into real recorded cat meows, with preview and WAV download.
 
+**Live demo: https://mhllr.github.io/miau/**
+
 ## Run locally
 
 Requires Node.js 22.12+ or a current supported Node release.
